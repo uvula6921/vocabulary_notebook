@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "https://owlbot.info/api/v4/dictionary/owl",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Token c48b847a2446b792803940b6a9d48b72acb299c7");
+            },
+            data: {},
+            error: function (xhr, status, error) {
+                alert("에러 발생!");
+            },
+            success: function (response) {
+                console.log(response)
+            }
+        })
+    </script>
+</head>
+<body>
+    <h3>{{name}}은 내 last name이다.</h3>
+
+    <h3>파라미터로 받은 단어는 {{ word }}</h3>
+    <h3>path로 받은 단어는 {{ keyword }}</h3>
+
+
+    <ul>
+        {% for row in rows %}
+            {% set gu_name = row['MSRSTE_NM'] %}
+            {% set gu_mise = row['IDEX_MVL'] %}
+            {% if gu_mise >= 60 %}
+                <li>{{ gu_name }}: {{ gu_mise }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</body>
+</html>
